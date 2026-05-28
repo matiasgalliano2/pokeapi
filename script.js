@@ -1,20 +1,17 @@
-async function buscarPokemon() {
+async function obtenerPokemon(nombre) {
 
-    const nombrePokemon = document
-        .getElementById("pokemonInput")
-        .value
-        .toLowerCase()
-
-    const url = `https://pokeapi.co/api/v2/pokemon/${nombrePokemon}`
+    const url = `https://pokeapi.co/api/v2/pokemon/${nombre}`
 
     try {
 
         const respuesta = await fetch(url)
+
         if (!respuesta.ok) {
             throw new Error("Pokemon no encontrado")
         }
 
         const data = await respuesta.json()
+
         mostrarPokemon(data)
 
     } catch(error) {
@@ -24,6 +21,23 @@ async function buscarPokemon() {
         `
     }
 }
+function buscarPokemon() {
+
+    const nombrePokemon = document
+        .getElementById("pokemonInput")
+        .value
+        .toLowerCase()
+
+    obtenerPokemon(nombrePokemon)
+}
+
+function pokemonRandom() {
+
+    const numeroRandom = Math.floor(Math.random() * 151) + 1
+
+    obtenerPokemon(numeroRandom)
+}
+
 function mostrarPokemon(pokemon) {
 
     const resultado = document.getElementById("resultado")
